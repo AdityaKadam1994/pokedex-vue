@@ -4,13 +4,19 @@ export const pokeDetails = {
     pokeStats: []
   },
   getters: {
+    getPokemonData (state) {
+      return state.pokeStats
+    }
   },
   actions: {
     getData ({ commit }, payload) {
-      for (let i = 1; i <= 10; i++) {
-        axios.get(`https://pokeapi.co/api/v2/pokemon/${i}`)
+      const DATA = []
+      for (let pokemonId = 12; pokemonId <= 23; pokemonId++) {
+        axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemonId}`)
           .then((res) => {
-            console.log(res.data)
+            // console.log(res.data)
+            DATA.push(res.data)
+            commit('POKEMONDATA', DATA)
           })
           .catch((err) => {
             console.log(err)
@@ -19,5 +25,8 @@ export const pokeDetails = {
     }
   },
   mutations: {
+    POKEMONDATA (state, payload) {
+      state.pokeStats = [...payload]
+    }
   }
 }

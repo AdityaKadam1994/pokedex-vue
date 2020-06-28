@@ -1,21 +1,19 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div class="d-flex justify-content-center">
+      <img alt="logo" src="img/pokemon.gif">
+    </div>
+    <PokemonBasic/>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-
+import PokemonBasic from './pokemon_details/PokemonBasic'
 export default {
   name: 'Home',
   components: {
-    HelloWorld
-  },
-  created () {
-    this.$store.dispatch('getData')
+    PokemonBasic
   }
 }
 </script>
