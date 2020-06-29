@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { pokeDetails } from '../Vuex/pokeDetails'
+import { pokeDetails } from '../utils/Vuex/pokeDetails'
 
 Vue.use(Vuex)
 

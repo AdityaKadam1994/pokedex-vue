@@ -22,10 +22,24 @@ export const pokeDetails = {
             console.log(err)
           })
       }
+    },
+    singlePokemon ({ commit }, payload) {
+      axios.get(`https://pokeapi.co/api/v2/pokemon/${payload}`)
+        .then((res) => {
+          console.log(res.data)
+          const formattedData = [res.data]
+          commit('SINGLEDATA', formattedData)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     }
   },
   mutations: {
     POKEMONDATA (state, payload) {
+      state.pokeStats = [...payload]
+    },
+    SINGLEDATA (state, payload) {
       state.pokeStats = [...payload]
     }
   }
