@@ -11,7 +11,7 @@ export const pokeDetails = {
   actions: {
     getData ({ commit }, payload) {
       const DATA = []
-      for (let pokemonId = 12; pokemonId <= 23; pokemonId++) {
+      for (let pokemonId = 12; pokemonId <= 47; pokemonId++) {
         axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemonId}`)
           .then((res) => {
             // console.log(res.data)
