@@ -30,6 +30,7 @@ export default {
   name: 'PokemonBasic',
   computed: {
     pokemons () {
+      console.log(this.$store.getters.getPokemonData)
       return this.$store.getters.getPokemonData
     }
   },
@@ -57,6 +58,7 @@ export default {
   .card-title {
     text-transform: capitalize;
     font-size: 22px;
+    text-shadow: 2px 2px 2px rgba(255, 234, 241, 1);
   }
   .card-subtitle {
     text-transform: capitalize;
