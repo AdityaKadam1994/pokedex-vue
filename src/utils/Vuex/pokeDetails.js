@@ -11,6 +11,9 @@ export const pokeDetails = {
   getters: {
     getPokemonData (state) {
       return state.pokeStats
+    },
+    getPokemonName (state) {
+      return state.pokeName
     }
   },
   actions: {
@@ -77,7 +80,7 @@ export const pokeDetails = {
       state.pokeName = storageData.pokename
     },
     SINGLEDATA (state, payload) {
-      state.pokeStats = []
+      state.pokeStats = [...payload]
     }
   }
 }
