@@ -30,7 +30,6 @@ export default {
   name: 'PokemonBasic',
   computed: {
     pokemons () {
-      console.log(this.$store.getters.getPokemonData)
       return this.$store.getters.getPokemonData
     }
   },
