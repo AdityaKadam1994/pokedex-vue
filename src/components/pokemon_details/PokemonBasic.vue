@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="row justify-content-center">
-      <div class="col-sm-4 mb-4" v-for="(pokemon, index) in pokemons" :key="index">
+      <div class="col-sm-4 mb-4" v-for="(pokemon, index) in getPokemonData" :key="index">
         <div class="card h-100">
           <div class="card-body">
             <div class="text-center">
@@ -26,12 +26,16 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   name: 'PokemonBasic',
   computed: {
-    pokemons () {
-      return this.$store.getters.getPokemonData
-    }
+    // pokemons () {
+    //   return this.$store.getters.getPokemonData
+    // }
+    ...mapGetters([
+      'getPokemonData'
+    ])
   },
   created () {
     this.$store.dispatch('getData')

@@ -13,6 +13,8 @@
 </template>
 
 <script>
+
+import _ from 'lodash'
 export default {
   name: 'SearchBar',
   data () {
@@ -27,12 +29,18 @@ export default {
   },
   methods: {
     handleForm () {
-      this.$store.dispatch('singlePokemon', this.pokeName)
+      if (this.pokeName) {
+        this.$store.dispatch('singlePokemon', this.pokeName)
+      } else {
+        alert('Input name of pokemon')
+      }
       this.flag = false
     },
-    filterData (e) {
-      console.log(e)
+    filterData: _.debounce(function (e) {
       const query = this.pokeName
+      if (!query) {
+        this.$store.dispatch('getData')
+      }
       if (e.keyCode === 13) {
         this.flag = false
       } else {
@@ -55,7 +63,7 @@ export default {
       if (this.autoSuggestList.length === 0) {
         this.flag = false
       }
-    },
+    }, 300),
     getClickValue (clickedName) {
       this.pokeName = clickedName
       this.flag = false
