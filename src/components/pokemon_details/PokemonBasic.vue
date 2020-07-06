@@ -8,7 +8,7 @@
               <img :src="pokemon.sprites.front_default" :alt="pokemon.name" class="img-fluid">
             </div>
             <h5 class="card-title text-center mb-3">{{pokemon.name}}</h5>
-            <h6 class="card-subtitle mb-1">Type: <span class="atr-separations" v-for="type in pokemon.types" :key="type.slot">{{type.type.name}}</span></h6>
+            <h6 class="card-subtitle mb-1">Type: <span class="badge badge-pill" :class="type.type.name" v-for="type in pokemon.types" :key="type.slot">{{type.type.name}}</span></h6>
             <p class="card-text">Abilities: <span class="atr-separations" v-for="ability in pokemon.abilities" :key="ability.slot">{{ability.ability.name}}</span></p>
             <div class="d-flex justify-content-between">
               <p class="stats">Hp: {{pokemon.stats[0].base_stat}} <font-awesome-icon icon="heart" /></p>
@@ -24,7 +24,6 @@
     </div>
   </div>
 </template>
-
 <script>
 import { mapGetters } from 'vuex'
 export default {
@@ -66,6 +65,64 @@ export default {
   .card-subtitle {
     text-transform: capitalize;
     font-size: 18px;
+    span {
+      font-size: 16px;
+      margin: 0 3px;
+    }
+    .grass {
+      background: #7ec850;
+    }
+    .poison {
+      background: #706286;
+    }
+    .fire {
+      background: #ff7b00;
+    }
+    .flying {
+      background: #b1aeac;
+    }
+    .water {
+      background: #54A4DE;
+    }
+    .bug {
+      background: #b0dea3;
+    }
+    .normal {
+      background: grey;
+    }
+    .fighting {
+      background: #d07800;
+    }
+    .ground {
+      background: #99803a;
+    }
+    .rock {
+      background: #6f6a5d;
+    }
+    .ghost {
+      background: #8d008c;
+    }
+    .steel {
+      background: #ddd5ce;
+    }
+    .electric {
+      background: #ffd100;
+    }
+    .psychic {
+      background: #615981;
+    }
+    .ice {
+      background: #6b9cce;
+    }
+    .dragon {
+      background: #aa5061;
+    }
+    .dark {
+      background: #36373c;
+    }
+    .fairy {
+      background: #ff87c5;
+    }
   }
   .card-text {
     text-transform: capitalize;
