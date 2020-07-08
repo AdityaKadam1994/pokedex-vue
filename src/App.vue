@@ -36,4 +36,62 @@ body {
     }
   }
 }
+    .grass {
+      background: #7ec850;
+    }
+    .poison {
+      background: #706286;
+    }
+    .fire {
+      background: #ff7b00;
+    }
+    .flying {
+      background: #b1aeac;
+    }
+    .water {
+      background: #54A4DE;
+    }
+    .bug {
+      background: #b0dea3;
+    }
+    .normal {
+      background: grey;
+    }
+    .fighting {
+      background: #d07800;
+    }
+    .ground {
+      background: #99803a;
+    }
+    .rock {
+      background: #6f6a5d;
+    }
+    .ghost {
+      background: #8d008c;
+    }
+    .steel {
+      background: #ddd5ce;
+    }
+    .electric {
+      background: #ffd100;
+    }
+    .psychic {
+      background: #615981;
+    }
+    .ice {
+      background: #6b9cce;
+    }
+    .dragon {
+      background: #aa5061;
+    }
+    .dark {
+      background: #36373c;
+    }
+    .fairy {
+      background: #ff87c5;
+    }
+    .unknown, .shadow {
+      background: #fff;
+      color: black
+    }
 </style>

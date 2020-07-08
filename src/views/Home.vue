@@ -4,6 +4,7 @@
       <img alt="logo" src="img/pokemon.gif">
     </div>
     <SearchBar/>
+    <FilterByType/>
     <PokemonBasic/>
   </div>
 </template>
@@ -12,11 +13,13 @@
 // @ is an alias to /src
 import PokemonBasic from '../components/pokemon_details/PokemonBasic'
 import SearchBar from '../components/pokemon_details/SearchBar'
+import FilterByType from '../components/pokemon_details/FilterByType'
 export default {
   name: 'Home',
   components: {
     PokemonBasic,
-    SearchBar
+    SearchBar,
+    FilterByType
   }
 }
 </script>

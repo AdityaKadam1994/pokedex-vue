@@ -6,7 +6,8 @@ const storageData = {
 export const pokeDetails = {
   state: {
     pokeStats: [],
-    pokeName: []
+    pokeName: [],
+    pokeType: []
   },
   getters: {
     getPokemonData (state) {
@@ -14,6 +15,9 @@ export const pokeDetails = {
     },
     getPokemonName (state) {
       return state.pokeName
+    },
+    getPokemonType (state) {
+      return state.pokeType
     }
   },
   actions: {
@@ -65,6 +69,15 @@ export const pokeDetails = {
         .catch((err) => {
           console.log(err)
         })
+    },
+    getPokeType ({ commit }) {
+      axios.get('https://pokeapi.co/api/v2/type')
+        .then(res => {
+          commit('POKETYPEDATA', res.data.results)
+        })
+        .catch(err => {
+          console.log(err)
+        })
     }
   },
   mutations: {
@@ -80,6 +93,17 @@ export const pokeDetails = {
     },
     SINGLEDATA (state, payload) {
       state.pokeStats = [...payload]
+    },
+    POKETYPEDATA (state, payload) {
+      // console.log(payload)
+      const formattedData = payload.map(item => {
+        return {
+          name: item.name,
+          url: item.url,
+          type_id: item.url.split('/').slice(-2)[0]
+        }
+      })
+      state.pokeType = [...formattedData]
     }
   }
 }
