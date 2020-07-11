@@ -2,7 +2,7 @@
   <div class="container">
     <div class="filter-wrapper d-flex align-items-center">
       <h6>Filter By Type:</h6>
-      <p v-for="type in getPokemonType" :key="type.type_id" :class="type.name" class="badge-pill">{{type.name}}</p>
+      <p v-for="type in getPokemonType" :key="type.type_id" :class="type.name" class="badge-pill pokemon-type" @click="fetchPokemonByType(type)">{{type.name}}</p>
     </div>
   </div>
 </template>
@@ -19,8 +19,12 @@ export default {
   },
   methods: {
     ...mapActions([
-      'getPokeType'
-    ])
+      'getPokeType',
+      'getPokemonByType'
+    ]),
+    fetchPokemonByType ({ name }) {
+      this.$store.dispatch('getPokemonByType', name)
+    }
   },
   computed: {
     ...mapGetters([
@@ -43,6 +47,9 @@ export default {
   }
   p {
     margin: 5px;
+  }
+  .pokemon-type {
+    cursor: pointer;
   }
 }
 </style>

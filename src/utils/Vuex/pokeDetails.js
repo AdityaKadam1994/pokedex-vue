@@ -40,7 +40,7 @@ export const pokeDetails = {
         }
       })
       const multiData = async () => {
-        for (let pokemonId = 1; pokemonId <= 18; pokemonId++) {
+        for (let pokemonId = 1; pokemonId <= 30; pokemonId++) {
           await new Promise(resolve => {
             loadDataInstance.get(`https://pokeapi.co/api/v2/pokemon/${pokemonId}`)
               .then((res) => {
@@ -78,6 +78,9 @@ export const pokeDetails = {
         .catch(err => {
           console.log(err)
         })
+    },
+    getPokemonByType ({ commit }, payload) {
+      console.log(payload)
     }
   },
   mutations: {
@@ -88,6 +91,10 @@ export const pokeDetails = {
         storageData.pokedetail = JSON.parse(localStorage.getItem('pokemonData'))
         storageData.pokename = JSON.parse(localStorage.getItem('pokemonName'))
       }
+      const top27 = storageData.pokedetail.filter((item, index) => {
+        return index <= 26
+      })
+      console.log(top27)
       state.pokeStats = storageData.pokedetail
       state.pokeName = storageData.pokename
     },

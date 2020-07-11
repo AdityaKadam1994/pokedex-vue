@@ -1,24 +1,33 @@
 <template>
   <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-sm-4 mb-4" v-for="(pokemon, index) in getPokemonData" :key="index">
-        <div class="card h-100">
-          <div class="card-body">
-            <div class="text-center">
-              <img :src="pokemon.sprites.front_default" :alt="pokemon.name" class="img-fluid">
-            </div>
-            <h5 class="card-title text-center mb-3">{{pokemon.name}}</h5>
-            <h6 class="card-subtitle mb-1">Type: <span class="badge badge-pill" :class="type.type.name" v-for="type in pokemon.types" :key="type.slot">{{type.type.name}}</span></h6>
-            <p class="card-text">Abilities: <span class="atr-separations" v-for="ability in pokemon.abilities" :key="ability.slot">{{ability.ability.name}}</span></p>
-            <div class="d-flex justify-content-between">
-              <p class="stats">Hp: {{pokemon.stats[0].base_stat}} <font-awesome-icon icon="heart" /></p>
-              <p class="stats">Attack: {{pokemon.stats[1].base_stat}} <font-awesome-icon icon="fist-raised" /></p>
-            </div>
-            <div class="d-flex justify-content-between">
-              <p class="stats">Defense: {{pokemon.stats[2].base_stat}} <font-awesome-icon icon="shield-alt" /></p>
-              <p class="stats">Speed: {{pokemon.stats[4].base_stat}} <font-awesome-icon icon="tachometer-alt" /></p>
+    <div class="wrapper" v-if="getPokemonData">
+      <div class="row justify-content-center">
+        <div class="col-sm-4 mb-4" v-for="(pokemon, index) in getPokemonData" :key="index">
+          <div class="card h-100">
+            <div class="card-body">
+              <div class="text-center">
+                <img :src="pokemon.sprites.front_default" :alt="pokemon.name" class="img-fluid">
+              </div>
+              <h5 class="card-title text-center mb-3">{{pokemon.name}}</h5>
+              <h6 class="card-subtitle mb-1">Type: <span class="badge badge-pill" :class="type.type.name" v-for="type in pokemon.types" :key="type.slot">{{type.type.name}}</span></h6>
+              <p class="card-text">Abilities: <span class="atr-separations" v-for="ability in pokemon.abilities" :key="ability.slot">{{ability.ability.name}}</span></p>
+              <div class="d-flex justify-content-between">
+                <p class="stats">Hp: {{pokemon.stats[0].base_stat}} <font-awesome-icon icon="heart" /></p>
+                <p class="stats">Attack: {{pokemon.stats[1].base_stat}} <font-awesome-icon icon="fist-raised" /></p>
+              </div>
+              <div class="d-flex justify-content-between">
+                <p class="stats">Defense: {{pokemon.stats[2].base_stat}} <font-awesome-icon icon="shield-alt" /></p>
+                <p class="stats">Speed: {{pokemon.stats[4].base_stat}} <font-awesome-icon icon="tachometer-alt" /></p>
+              </div>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+    <div v-else>
+      <div class="row">
+        <div class="col-sm-12">
+          <h2 class="text-center">No Data Found</h2>
         </div>
       </div>
     </div>
