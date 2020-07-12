@@ -40,7 +40,7 @@ export const pokeDetails = {
         }
       })
       const multiData = async () => {
-        for (let pokemonId = 1; pokemonId <= 30; pokemonId++) {
+        for (let pokemonId = 1; pokemonId <= 120; pokemonId++) {
           await new Promise(resolve => {
             loadDataInstance.get(`https://pokeapi.co/api/v2/pokemon/${pokemonId}`)
               .then((res) => {
@@ -79,14 +79,38 @@ export const pokeDetails = {
           console.log(err)
         })
     },
-    getPokemonByType ({ commit }, payload) {
-      console.log(payload)
+    getPokemonByType ({ commit }, clickedType) {
+      const modificationData = [...storageData.pokedetail]
+      const filteredData = modificationData.map(item => {
+        let actualdata
+        item.types.filter(type => {
+          if (type.type.name === clickedType) {
+            actualdata = item
+          }
+        })
+        return actualdata
+      }).filter(item => item !== undefined)
+      console.log(filteredData)
+      commit('POKEFILTERBYTYPE', filteredData)
     }
   },
   mutations: {
     POKEMONDATA (state, { pokedetail, pokename }) {
+      // console.log(pokedetail)
+      const neededKeysData = pokedetail.map(item => {
+        return {
+          abilities: item.abilities,
+          height: item.height,
+          name: item.name,
+          order: item.order,
+          sprites: item.sprites,
+          stats: item.stats,
+          types: item.types,
+          weight: item.weight
+        }
+      })
       if (!storageData.pokedetail && !storageData.pokename) {
-        localStorage.setItem('pokemonData', JSON.stringify([...pokedetail]))
+        localStorage.setItem('pokemonData', JSON.stringify([...neededKeysData]))
         localStorage.setItem('pokemonName', JSON.stringify([...pokename]))
         storageData.pokedetail = JSON.parse(localStorage.getItem('pokemonData'))
         storageData.pokename = JSON.parse(localStorage.getItem('pokemonName'))
@@ -94,8 +118,8 @@ export const pokeDetails = {
       const top27 = storageData.pokedetail.filter((item, index) => {
         return index <= 26
       })
-      console.log(top27)
-      state.pokeStats = storageData.pokedetail
+      // console.log(top27)
+      state.pokeStats = top27
       state.pokeName = storageData.pokename
     },
     SINGLEDATA (state, payload) {
@@ -111,6 +135,9 @@ export const pokeDetails = {
         }
       })
       state.pokeType = [...formattedData]
+    },
+    POKEFILTERBYTYPE (state, payload) {
+      state.pokeStats = [...payload]
     }
   }
 }

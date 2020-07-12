@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <div class="wrapper" v-if="getPokemonData">
-      <div class="row justify-content-center">
+    <div class="wrapper" v-if="getPokemonData.length > 0">
+      <div class="row">
         <div class="col-sm-4 mb-4" v-for="(pokemon, index) in getPokemonData" :key="index">
           <div class="card h-100">
             <div class="card-body">
@@ -13,11 +13,15 @@
               <p class="card-text">Abilities: <span class="atr-separations" v-for="ability in pokemon.abilities" :key="ability.slot">{{ability.ability.name}}</span></p>
               <div class="d-flex justify-content-between">
                 <p class="stats">Hp: {{pokemon.stats[0].base_stat}} <font-awesome-icon icon="heart" /></p>
-                <p class="stats">Attack: {{pokemon.stats[1].base_stat}} <font-awesome-icon icon="fist-raised" /></p>
+                <p class="stats">Height: {{pokemon.height}} <font-awesome-icon icon="ruler-vertical" /></p>
               </div>
               <div class="d-flex justify-content-between">
+                <p class="stats">Attack: {{pokemon.stats[1].base_stat}} <font-awesome-icon icon="fist-raised" /></p>
                 <p class="stats">Defense: {{pokemon.stats[2].base_stat}} <font-awesome-icon icon="shield-alt" /></p>
+              </div>
+              <div class="d-flex justify-content-between">
                 <p class="stats">Speed: {{pokemon.stats[4].base_stat}} <font-awesome-icon icon="tachometer-alt" /></p>
+                <p class="stats">Weight: {{pokemon.weight}} <font-awesome-icon icon="weight-hanging" /></p>
               </div>
             </div>
           </div>
@@ -103,7 +107,13 @@ export default {
     color: #507eff;
   }
   .fa-tachometer-alt {
-    color: #33e833
+    color: #33e833;
+  }
+  .fa-ruler-vertical {
+    color: yellow;
+  }
+  .fa-weight-hanging {
+    color: grey;
   }
   .stats {
     margin-bottom: 5px;
