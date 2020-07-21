@@ -31,7 +31,7 @@ export const pokeDetails = {
         } else {
           setTimeout(() => {
             commit('POKEMONDATA', storageData)
-          }, 3000)
+          }, 2000)
         }
       })
       loadNameInstance.interceptors.request.use(config => {
