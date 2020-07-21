@@ -29,7 +29,9 @@ export const pokeDetails = {
         if (!storageData.pokedetail) {
           return config
         } else {
-          commit('POKEMONDATA', storageData)
+          setTimeout(() => {
+            commit('POKEMONDATA', storageData)
+          }, 3000)
         }
       })
       loadNameInstance.interceptors.request.use(config => {
@@ -40,7 +42,7 @@ export const pokeDetails = {
         }
       })
       const multiData = async () => {
-        for (let pokemonId = 1; pokemonId <= 120; pokemonId++) {
+        for (let pokemonId = 1; pokemonId <= 160; pokemonId++) {
           await new Promise(resolve => {
             loadDataInstance.get(`https://pokeapi.co/api/v2/pokemon/${pokemonId}`)
               .then((res) => {
@@ -90,7 +92,6 @@ export const pokeDetails = {
         })
         return actualdata
       }).filter(item => item !== undefined)
-      console.log(filteredData)
       commit('POKEFILTERBYTYPE', filteredData)
     }
   },

@@ -1,42 +1,40 @@
 <template>
   <div class="container">
-    <div class="text-center" v-if="pokemonData.loading">
+    <div class="text-center" v-show="pokemonDataState.loading">
       <img src="img/spinner.gif" alt="spinner" class="spinner">
     </div>
-    <div v-else>
-      <div class="wrapper" v-if="pokemonData.data">
-        <div class="row">
-          <div class="col-sm-4 mb-4" v-for="(pokemon, index) in getPokemonData" :key="index">
-            <div class="card h-100">
-              <div class="card-body">
-                <div class="text-center">
-                  <img :src="pokemon.sprites.front_default" :alt="pokemon.name" class="img-fluid">
-                </div>
-                <h5 class="card-title text-center mb-3">{{pokemon.name}}</h5>
-                <h6 class="card-subtitle mb-1">Type: <span class="badge badge-pill" :class="type.type.name" v-for="type in pokemon.types" :key="type.slot">{{type.type.name}}</span></h6>
-                <p class="card-text">Abilities: <span class="atr-separations" v-for="ability in pokemon.abilities" :key="ability.slot">{{ability.ability.name}}</span></p>
-                <div class="d-flex justify-content-between">
-                  <p class="stats">Hp: {{pokemon.stats[0].base_stat}} <font-awesome-icon icon="heart" /></p>
-                  <p class="stats">Height: {{pokemon.height}} <font-awesome-icon icon="ruler-vertical" /></p>
-                </div>
-                <div class="d-flex justify-content-between">
-                  <p class="stats">Attack: {{pokemon.stats[1].base_stat}} <font-awesome-icon icon="fist-raised" /></p>
-                  <p class="stats">Defense: {{pokemon.stats[2].base_stat}} <font-awesome-icon icon="shield-alt" /></p>
-                </div>
-                <div class="d-flex justify-content-between">
-                  <p class="stats">Speed: {{pokemon.stats[4].base_stat}} <font-awesome-icon icon="tachometer-alt" /></p>
-                  <p class="stats">Weight: {{pokemon.weight}} <font-awesome-icon icon="weight-hanging" /></p>
-                </div>
+    <div class="wrapper" v-if="fetchPokemonData.length > 0">
+      <div class="row">
+        <div class="col-sm-4 mb-4" v-for="(pokemon, index) in fetchPokemonData" :key="index">
+          <div class="card h-100">
+            <div class="card-body">
+              <div class="text-center">
+                <img :src="pokemon.sprites.front_default" :alt="pokemon.name" class="img-fluid">
+              </div>
+              <h5 class="card-title text-center mb-3">{{pokemon.name}}</h5>
+              <h6 class="card-subtitle mb-1">Type: <span class="badge badge-pill" :class="type.type.name" v-for="type in pokemon.types" :key="type.slot">{{type.type.name}}</span></h6>
+              <p class="card-text">Abilities: <span class="atr-separations" v-for="ability in pokemon.abilities" :key="ability.slot">{{ability.ability.name}}</span></p>
+              <div class="d-flex justify-content-between">
+                <p class="stats">Hp: {{pokemon.stats[0].base_stat}} <font-awesome-icon icon="heart" /></p>
+                <p class="stats">Height: {{pokemon.height}} <font-awesome-icon icon="ruler-vertical" /></p>
+              </div>
+              <div class="d-flex justify-content-between">
+                <p class="stats">Attack: {{pokemon.stats[1].base_stat}} <font-awesome-icon icon="fist-raised" /></p>
+                <p class="stats">Defense: {{pokemon.stats[2].base_stat}} <font-awesome-icon icon="shield-alt" /></p>
+              </div>
+              <div class="d-flex justify-content-between">
+                <p class="stats">Speed: {{pokemon.stats[4].base_stat}} <font-awesome-icon icon="tachometer-alt" /></p>
+                <p class="stats">Weight: {{pokemon.weight}} <font-awesome-icon icon="weight-hanging" /></p>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div v-if="pokemonData.data.length === 0">
-        <div class="row">
-          <div class="col-sm-12">
-            <h2 class="text-center">No Data Found</h2>
-          </div>
+    </div>
+    <div v-show="fetchPokemonData.length === 0 && !pokemonDataState.loading">
+      <div class="row">
+        <div class="col-sm-12">
+          <h2 class="text-center">No Data Found</h2>
         </div>
       </div>
     </div>
@@ -48,9 +46,9 @@ export default {
   name: 'PokemonBasic',
   data () {
     return {
-      pokemonData: {
-        data: [],
-        loading: true
+      pokemonDataState: {
+        loading: true,
+        data: null
       }
     }
   },
@@ -61,21 +59,34 @@ export default {
     ...mapGetters([
       'getPokemonData'
     ]),
-    fetchPokemonData: {
-      set: function ({ data, loading }) {
-        this.pokemonData.data = data
-        this.pokemonData.loading = loading
-      },
-      get: function () {
-        return this.pokemonData
+    fetchPokemonData () {
+      // set: function ({ data, loading }) {
+      //   if (data) {
+      //     this.pokemonData.data = [...data]
+      //     console.log('excuted')
+      //     this.pokemonData.loading = loading
+      //   }
+      // },
+      // get: function () {
+      //   if (this.pokemonData.data.length > 0) {
+      //     return this.pokemonData
+      //   } else {
+      //     console.log('here')
+      //     return false
+      //   }
+      // }
+      if (this.getPokemonData.length > 0) {
+        const loadingState = this.pokemonDataState
+        loadingState.loading = false
+        loadingState.data = this.getPokemonData
       }
+      return this.getPokemonData
     }
   },
   created () {
     this.$store.dispatch('getData')
   },
   mounted () {
-    this.fetchPokemonData = { data: this.getPokemonData, loading: false }
   }
 }
 </script>
