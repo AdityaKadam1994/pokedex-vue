@@ -4,31 +4,33 @@
       <img src="img/spinner.gif" alt="spinner" class="spinner">
     </div>
     <div class="wrapper" v-if="fetchPokemonData.length > 0">
-      <div class="row">
-        <div class="col-sm-4 mb-4" v-for="(pokemon, index) in fetchPokemonData" :key="index">
-          <div class="card h-100">
-            <div class="card-body">
-              <div class="text-center">
-                <img :src="pokemon.sprites.front_default" :alt="pokemon.name" class="img-fluid">
-              </div>
-              <h5 class="card-title text-center mb-3">{{pokemon.name}}</h5>
-              <h6 class="card-subtitle mb-1">Type: <span class="badge badge-pill" :class="type.type.name" v-for="type in pokemon.types" :key="type.slot">{{type.type.name}}</span></h6>
-              <p class="card-text">Abilities: <span class="atr-separations" v-for="ability in pokemon.abilities" :key="ability.slot">{{ability.ability.name}}</span></p>
-              <div class="d-flex justify-content-between">
-                <p class="stats">Hp: {{pokemon.stats[0].base_stat}} <font-awesome-icon icon="heart" /></p>
-                <p class="stats">Height: {{pokemon.height}} <font-awesome-icon icon="ruler-vertical" /></p>
-              </div>
-              <div class="d-flex justify-content-between">
-                <p class="stats">Attack: {{pokemon.stats[1].base_stat}} <font-awesome-icon icon="fist-raised" /></p>
-                <p class="stats">Defense: {{pokemon.stats[2].base_stat}} <font-awesome-icon icon="shield-alt" /></p>
-              </div>
-              <div class="d-flex justify-content-between">
-                <p class="stats">Speed: {{pokemon.stats[4].base_stat}} <font-awesome-icon icon="tachometer-alt" /></p>
-                <p class="stats">Weight: {{pokemon.weight}} <font-awesome-icon icon="weight-hanging" /></p>
+      <div class="">
+        <transition-group name="list" tag="div" class="row">
+          <div class="col-sm-4 mb-4" v-for="pokemon in fetchPokemonData" :key="pokemon.name">
+            <div class="card h-100">
+              <div class="card-body">
+                <div class="text-center">
+                  <img :src="pokemon.sprites.front_default" :alt="pokemon.name" class="img-fluid">
+                </div>
+                <h5 class="card-title text-center mb-3">{{pokemon.name}}</h5>
+                <h6 class="card-subtitle mb-1">Type: <span class="badge badge-pill" :class="type.type.name" v-for="type in pokemon.types" :key="type.slot">{{type.type.name}}</span></h6>
+                <p class="card-text">Abilities: <span class="atr-separations" v-for="ability in pokemon.abilities" :key="ability.slot">{{ability.ability.name}}</span></p>
+                <div class="d-flex justify-content-between">
+                  <p class="stats">Hp: {{pokemon.stats[0].base_stat}} <font-awesome-icon icon="heart" /></p>
+                  <p class="stats">Height: {{pokemon.height}} <font-awesome-icon icon="ruler-vertical" /></p>
+                </div>
+                <div class="d-flex justify-content-between">
+                  <p class="stats">Attack: {{pokemon.stats[1].base_stat}} <font-awesome-icon icon="fist-raised" /></p>
+                  <p class="stats">Defense: {{pokemon.stats[2].base_stat}} <font-awesome-icon icon="shield-alt" /></p>
+                </div>
+                <div class="d-flex justify-content-between">
+                  <p class="stats">Speed: {{pokemon.stats[4].base_stat}} <font-awesome-icon icon="tachometer-alt" /></p>
+                  <p class="stats">Weight: {{pokemon.weight}} <font-awesome-icon icon="weight-hanging" /></p>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </transition-group>
       </div>
     </div>
     <div v-show="fetchPokemonData.length === 0 && !pokemonDataState.loading">
@@ -94,6 +96,27 @@ export default {
 <style lang="scss" scoped>
 .spinner {
   max-width: 150px;
+}
+.list-enter-active {
+  transition: all 2s ease;
+}
+
+.list-enter {
+  opacity: 0;
+}
+.list-enter-to {
+  transform: rotate(360deg);
+  opacity: 1;
+}
+.list-leave-active {
+  transition: all 1s ease;
+}
+.list-leave {
+  opacity: 1;
+}
+.list-leave-to {
+  transform: translateX(50px);
+  opacity: 0;
 }
 .card {
   background: #243B55;
