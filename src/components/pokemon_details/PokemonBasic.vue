@@ -40,6 +40,15 @@
         </div>
       </div>
     </div>
+    <div class="pagination-wrapper">
+      <nav aria-label="...">
+        <ul class="pagination pagination-md justify-content-center">
+          <li class="page-item" v-for="pg_no in paginationOptions.totalPages" :key="pg_no">
+            <a class="page-link" tabindex="-1" @click="pageClick(pg_no)">{{pg_no}}</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
   </div>
 </template>
 <script>
@@ -51,6 +60,12 @@ export default {
       pokemonDataState: {
         loading: true,
         data: null
+      },
+      paginationOptions: {
+        totalPages: null,
+        currentPage: 1,
+        perPage: 6,
+        totalItems: null
       }
     }
   },
@@ -81,8 +96,25 @@ export default {
         const loadingState = this.pokemonDataState
         loadingState.loading = false
         loadingState.data = this.getPokemonData
+        this.paginationCreation(this.getPokemonData)
       }
-      return this.getPokemonData
+      const currentPage = this.paginationOptions.currentPage
+      const perPage = this.paginationOptions.perPage
+      const firstIndex = (currentPage * perPage) - perPage
+      const lastIndex = (currentPage * perPage)
+      const slicedData = this.getPokemonData.slice(firstIndex, lastIndex)
+      return slicedData
+    }
+  },
+  methods: {
+    pageClick (pgNo) {
+      this.paginationOptions.currentPage = pgNo
+    },
+    paginationCreation (result) {
+      const data = result
+      const totalPages = (Math.ceil(data.length / 6))
+      this.paginationOptions.totalItems = data.length
+      this.paginationOptions.totalPages = totalPages
     }
   },
   created () {
@@ -97,6 +129,7 @@ export default {
 .spinner {
   max-width: 150px;
 }
+
 .list-enter-active {
   transition: all 2s ease;
 }
@@ -108,16 +141,20 @@ export default {
   transform: rotate(360deg);
   opacity: 1;
 }
+
 .list-leave-active {
   transition: all 1s ease;
 }
+
 .list-leave {
   opacity: 1;
 }
+
 .list-leave-to {
   transform: translateX(50px);
   opacity: 0;
 }
+
 .card {
   background: #243B55;
   font-family: 'Quantico', sans-serif;
