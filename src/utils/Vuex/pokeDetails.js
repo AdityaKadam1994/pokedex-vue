@@ -116,11 +116,11 @@ export const pokeDetails = {
         storageData.pokedetail = JSON.parse(localStorage.getItem('pokemonData'))
         storageData.pokename = JSON.parse(localStorage.getItem('pokemonName'))
       }
-      const top27 = storageData.pokedetail.filter((item, index) => {
-        return index <= 26
-      })
+      // const top27 = storageData.pokedetail.filter((item, index) => {
+      //   return index <= 26
+      // })
       // console.log(top27)
-      state.pokeStats = top27
+      state.pokeStats = storageData.pokedetail
       state.pokeName = storageData.pokename
     },
     SINGLEDATA (state, payload) {

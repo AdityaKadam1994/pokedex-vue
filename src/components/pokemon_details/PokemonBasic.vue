@@ -40,7 +40,7 @@
         </div>
       </div>
     </div>
-    <div class="pagination-wrapper">
+    <div class="pagination-wrapper" v-show="fetchPokemonData.length > 0">
       <nav aria-label="...">
         <ul class="pagination pagination-md justify-content-center">
           <li class="page-item" v-for="pg_no in paginationOptions.totalPages" :key="pg_no">
@@ -64,7 +64,7 @@ export default {
       paginationOptions: {
         totalPages: null,
         currentPage: 1,
-        perPage: 6,
+        perPage: 9,
         totalItems: null
       }
     }
@@ -112,7 +112,7 @@ export default {
     },
     paginationCreation (result) {
       const data = result
-      const totalPages = (Math.ceil(data.length / 6))
+      const totalPages = (Math.ceil(data.length / this.paginationOptions.perPage))
       this.paginationOptions.totalItems = data.length
       this.paginationOptions.totalPages = totalPages
     }
@@ -217,5 +217,12 @@ export default {
   .stats {
     margin-bottom: 5px;
   }
+}
+.page-link {
+  background-color: #243B55;
+  color: white;
+}
+.pagination {
+  margin-top: 20px;
 }
 </style>
