@@ -40,7 +40,7 @@
         </div>
       </div>
     </div>
-    <div class="pagination-wrapper" v-show="fetchPokemonData.length > 0">
+    <!-- <div class="pagination-wrapper" v-show="fetchPokemonData.length > 0">
       <nav aria-label="...">
         <ul class="pagination pagination-md justify-content-center">
           <li class="page-item" v-for="pg_no in paginationOptions.totalPages" :key="pg_no">
@@ -48,13 +48,21 @@
           </li>
         </ul>
       </nav>
-    </div>
+    </div> -->
+    <Pagination :paginationOptions='paginationOptions' v-show="fetchPokemonData.length > 0" @pageClick='pageClick($event)' />
   </div>
 </template>
+
 <script>
+
 import { mapGetters } from 'vuex'
+import Pagination from './Pagination'
+
 export default {
   name: 'PokemonBasic',
+  components: {
+    Pagination
+  },
   data () {
     return {
       pokemonDataState: {
@@ -96,9 +104,13 @@ export default {
         const loadingState = this.pokemonDataState
         loadingState.loading = false
         loadingState.data = this.getPokemonData
+        // Sending data to set total items and total pages
         this.paginationCreation(this.getPokemonData)
       }
+
+      // Pagination Logic
       const currentPage = this.paginationOptions.currentPage
+      console.log(currentPage)
       const perPage = this.paginationOptions.perPage
       const firstIndex = (currentPage * perPage) - perPage
       const lastIndex = (currentPage * perPage)
@@ -108,6 +120,7 @@ export default {
   },
   methods: {
     pageClick (pgNo) {
+      console.log('executed')
       this.paginationOptions.currentPage = pgNo
     },
     paginationCreation (result) {
@@ -120,7 +133,8 @@ export default {
   created () {
     this.$store.dispatch('getData')
   },
-  mounted () {
+  updated () {
+    this.paginationOptions.currentPage = 1
   }
 }
 </script>
@@ -218,11 +232,5 @@ export default {
     margin-bottom: 5px;
   }
 }
-.page-link {
-  background-color: #243B55;
-  color: white;
-}
-.pagination {
-  margin-top: 20px;
-}
+
 </style>
